@@ -21,6 +21,9 @@
   "engines": {
     "node": ">=14.0.0"
   },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com"
+  },
   "moduleFileExtensions": [
     "js",
     "ts",
