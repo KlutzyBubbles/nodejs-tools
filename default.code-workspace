@@ -6,15 +6,26 @@
 		"files.eol": "\n",
 		"files.insertFinalNewline": true,
 		"files.trimTrailingWhitespace": true,
-        "javascript.validate.enable": false,
-        "standard.engine": "ts-standard",
-        "editor.insertSpaces": true,
-        "editor.tabSize": 2,
-        "editor.detectIndentation": true
+    "javascript.validate.enable": false,
+    "standard.engine": "ts-standard",
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.detectIndentation": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
 	},
 	"extensions": {
 		"recommendations": [
-			"standard.vscode-standard"
+      "dbaeumer.vscode-eslint",
+      "donjayamanne.githistory",
+      "eamodio.gitlens",
+      "EditorConfig.EditorConfig",
+      "esbenp.prettier-vscode",
+      "oderwat.indent-rainbow",
+      "PKief.material-icon-theme",
+      "redhat.vscode-yaml",
+      "shardulm94.trailing-spaces",
+      "standard.vscode-standard",
 		]
 	}
 }
