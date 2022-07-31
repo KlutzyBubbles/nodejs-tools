@@ -34,13 +34,6 @@ jobs:
         node-version: ${{ matrix['node-version'] }}
         cache: 'npm'
     - run: npm ci
-    - name: create-json
-      id: create-json
-      uses: jsdaniell/create-json@1.1.2
-      with:
-        name: "users.json"
-        json: ${{ secrets.TEST_STEAM_ACCOUNTS }}
-        dir: 'tests/kards/'
     - run: npm test
     - uses: codecov/codecov-action@v2
       with:
