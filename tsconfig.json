@@ -1,0 +1,38 @@
+{
+    "ts-node": {
+        "files": true
+    },
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "commonjs",
+        "allowJs": true,
+        "outDir": "./build",
+        "removeComments": false,
+        "isolatedModules": false,
+        "sourceMap": true,
+        "inlineSourceMap": false,
+        "inlineSources": false,
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "declaration": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+    },
+    "exclude": [
+        "tests/**",
+        "**/*.test.ts",
+        "**/*.ignore.ts",
+        "./build/**/*"
+    ],
+    "include": [
+        "src/**/*",
+        "types/**/*"
+    ]
+}
