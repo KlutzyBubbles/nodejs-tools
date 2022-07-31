@@ -5,19 +5,16 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "files": [
-    "build/backend",
-    "build/connectors",
-    "build/includes",
-    "build/kards",
+    "build/logging",
     "build/index.*",
     "types/*.d.ts"
   ],
   "scripts": {
-    "test": "jest --verbose --maxWorkers=1 --detectOpenHandles",
+    "test": "npm run clean && jest --verbose --maxWorkers=1 --detectOpenHandles",
     "build": "npm run clean && tsc",
     "build:check": "npm run clean && tsc --noEmit",
     "lint": "npx eslint .",
-    "clean": "rm -rf package build *.tgz",
+    "clean": "rimraf package build *.tgz",
     "publish:test": "npm run publish:pack && tar -xvzf *.tgz",
     "publish:pack": "npm run clean && npm run build && npm pack"
   },
@@ -54,6 +51,7 @@
   "license": "MIT",
   "dependencies": {
     "q": "^1.5.1",
+    "rimraf": "^3.0.2",
     "winston": "^3.8.1",
     "winston-daily-rotate-file": "^4.7.1"
   },
