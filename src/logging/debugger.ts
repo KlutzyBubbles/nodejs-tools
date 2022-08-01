@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { EventEmitter } from 'events'
+import * as logger from 'winston'
 
 export default class Debugger extends EventEmitter {
   public level: number
@@ -20,6 +21,34 @@ export default class Debugger extends EventEmitter {
 
   private isLevel (level: string): boolean {
     return this.getLevelFromName(level) <= this.level
+  }
+
+  public linkLogger (loggerObj: logger.Logger): void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    this.on('all', (args: any[]) => {
+      const level: string = args[-1]
+      args = args.pop()
+      switch (level) {
+        case 'silly':
+          loggerObj.silly(args)
+          break
+        case 'debug':
+          loggerObj.debug(args)
+          break
+        case 'info':
+          loggerObj.info(args)
+          break
+        case 'warn':
+          loggerObj.warn(args)
+          break
+        case 'error':
+          loggerObj.error(args)
+          break
+        case 'fatal':
+          loggerObj.error(args)
+          break
+      }
+    })
   }
 
   public getLevelFromName (name: string): number {
