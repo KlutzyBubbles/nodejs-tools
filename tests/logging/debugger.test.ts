@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Debugger } from '../../src/index'
-import { logger as loggerSet } from '../../src/index'
+import { getCurrentLogger } from '../../src/index'
 
 describe('init', () => {
   let logger: Debugger
@@ -21,7 +21,7 @@ describe('linkLogger', () => {
     logger = new Debugger()
   })
   it('Link and run', () => {
-    var loggerObj = loggerSet.getCurrentLogger('a')
+    var loggerObj = getCurrentLogger('a')
     logger.level = logger.getLevelFromName('silly')
     logger.linkLogger(loggerObj)
     logger.silly('silly log')
@@ -32,7 +32,7 @@ describe('linkLogger', () => {
     logger.fatal('fatal log')
   })
   it('Link and run with undefined', () => {
-    var loggerObj = loggerSet.getCurrentLogger('a')
+    var loggerObj = getCurrentLogger('a')
     logger.level = logger.getLevelFromName('silly')
     logger.linkLogger(loggerObj)
     logger.silly('silly log', undefined)

@@ -5,20 +5,20 @@ jest.mock('cluster', () => {
   }
 });
 
-import { logger } from '../../src/index'
+import { getAllLoggers, getCurrentLogger, resetLoggers } from '../../src/index'
 
 describe('getCurrentLogger', () => {
   beforeEach(() => {
-    logger.resetLoggers()
+    resetLoggers()
     process.env.FORK_ID = undefined
   })
   it('Should use true if isPrimary or isMaster isnt available', () => {
     process.env.FORK_ID = 'fork-1'
-    let allLoggers = logger.getAllLoggers()
+    let allLoggers = getAllLoggers()
     expect(allLoggers.get('master - a')).not.toBeDefined()
-    let loggerObj = logger.getCurrentLogger('a')
+    let loggerObj = getCurrentLogger('a')
     expect(loggerObj).toBeDefined()
-    allLoggers = logger.getAllLoggers()
+    allLoggers = getAllLoggers()
     expect(allLoggers.get('master - a')).toBeDefined()
     expect(allLoggers.size).toBe(1)
   })
