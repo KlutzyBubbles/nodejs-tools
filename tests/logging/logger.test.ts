@@ -40,6 +40,7 @@ describe('getLogger', () => {
 describe('getCurrentLogger', () => {
   beforeEach(() => {
     logger.resetLoggers()
+    process.env.FORK_ID = undefined
   })
   it('Should throw on empty name', () => {
     expect(() => { logger.getCurrentLogger('') }).toThrow()

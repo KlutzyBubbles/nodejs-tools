@@ -16,21 +16,15 @@ export function formatObject (param: any): string {
     if (Object.prototype.hasOwnProperty.call(param, 'message')) {
       return param.message
     }
-    let cache: object[] | null = []
     const result = JSON.stringify(param, (_, value) => {
-      if (typeof value === 'object' && value !== null) {
-        if (cache?.includes(value) ?? false) return
-        cache?.push(value)
-      }
       return value
     })
-    cache = null
     return result
   }
   return param.toString()
 }
 
-/* istanbul ignore start */
+/* istanbul ignore next */
 const all = logger.format((info: logger.Logform.TransformableInfo) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const message: any = info.message
@@ -43,7 +37,6 @@ const all = logger.format((info: logger.Logform.TransformableInfo) => {
   }
   return info
 })
-/* istanbul ignore stop */
 
 interface CustomTransformableInfo extends logger.Logform.TransformableInfo {
   timestamp: string
@@ -100,8 +93,9 @@ export function getConfig (label: string): logger.LoggerOptions {
         format: logger.format.combine(
           logger.format.colorize(),
           logger.format.printf((msg) => {
-            /* istanbul ignore next 2 */
+            /* istanbul ignore next */
             const msgTyped: CustomTransformableInfo = msg as CustomTransformableInfo
+            /* istanbul ignore next */
             return `[${msgTyped.timestamp}][${msgTyped.label}][${msgTyped.level}]: ${msgTyped.message}`
           })
         )
@@ -114,8 +108,9 @@ export function getConfig (label: string): logger.LoggerOptions {
         maxFiles: '14d',
         format: logger.format.combine(
           logger.format.printf((msg) => {
-            /* istanbul ignore next 2 */
+            /* istanbul ignore next */
             const msgTyped: CustomTransformableInfo = msg as CustomTransformableInfo
+            /* istanbul ignore next */
             return `[${msgTyped.timestamp}][${msgTyped.label}][${msgTyped.level}]: ${msgTyped.message}`
           })
         )
@@ -144,6 +139,9 @@ export function getCurrentLogger (name: string): logger.Logger {
   if (name === '') {
     throw new Error('Current logger name is empty')
   }
+  console.log('data')
+  console.log(cluster.isMaster)
+  console.log(cluster.isPrimary)
   const logger = getLogger(getForkName(cluster.isMaster ?? cluster.isPrimary ?? true, process.env.name, process.env.FORK_ID), name)
   return logger
 }

@@ -1,5 +1,48 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Debugger } from '../../src/index'
+import { logger as loggerSet } from '../../src/index'
+
+describe('init', () => {
+  let logger: Debugger
+  beforeEach(() => {
+    logger = new Debugger()
+  })
+  it('Should have more than 1 level', () => {
+    expect(logger.levels.length).toBeGreaterThan(1)
+  })
+  it('Should not crash on error', () => {
+    expect(() => { logger.error('test') }).not.toThrow()
+  })
+})
+
+describe('linkLogger', () => {
+  let logger: Debugger
+  beforeEach(() => {
+    logger = new Debugger()
+  })
+  it('Link and run', () => {
+    var loggerObj = loggerSet.getCurrentLogger('a')
+    logger.level = logger.getLevelFromName('silly')
+    logger.linkLogger(loggerObj)
+    logger.silly('silly log')
+    logger.debug('debug log')
+    logger.info('info log')
+    logger.warn('warn log')
+    logger.error('error log')
+    logger.fatal('fatal log')
+  })
+  it('Link and run with undefined', () => {
+    var loggerObj = loggerSet.getCurrentLogger('a')
+    logger.level = logger.getLevelFromName('silly')
+    logger.linkLogger(loggerObj)
+    logger.silly('silly log', undefined)
+    logger.debug('debug log', undefined)
+    logger.info('info log', undefined)
+    logger.warn('warn log', undefined)
+    logger.error('error log', undefined)
+    logger.fatal('fatal log', undefined)
+  })
+})
 
 describe('getLevelFromName', () => {
   let logger: Debugger

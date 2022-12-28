@@ -17,6 +17,8 @@ export default class Debugger extends EventEmitter {
       'silly'
     ]
     this.level = this.getLevelFromName('warn')
+    // To remove unwanted process killing if logger isnt attached
+    this.on('error', () => {})
   }
 
   private isLevel (level: string): boolean {
@@ -25,27 +27,27 @@ export default class Debugger extends EventEmitter {
 
   public linkLogger (loggerObj: logger.Logger): void {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.on('all', (args: any[]) => {
-      const level: string = args[-1]
+    this.on('all', (message: any, args: any[]) => {
+      const level: string = args[args.length - 1]
       args = args.pop()
       switch (level) {
         case 'silly':
-          loggerObj.silly(args)
+          loggerObj.silly(message, args)
           break
         case 'debug':
-          loggerObj.debug(args)
+          loggerObj.debug(message, args)
           break
         case 'info':
-          loggerObj.info(args)
+          loggerObj.info(message, args)
           break
         case 'warn':
-          loggerObj.warn(args)
+          loggerObj.warn(message, args)
           break
         case 'error':
-          loggerObj.error(args)
+          loggerObj.error(message, args)
           break
         case 'fatal':
-          loggerObj.error(args)
+          loggerObj.error(message, args)
           break
       }
     })
@@ -56,35 +58,35 @@ export default class Debugger extends EventEmitter {
     return calculated !== -1 ? calculated : 2
   }
 
-  public writeDebug (level: string, ...data: any[]): void {
-    this.emit(level, data)
+  public writeDebug (level: string, message: any, ...data: any[]): void {
+    this.emit(level, message, data)
     if (this.isLevel(level)) {
-      data.push(level)
-      this.emit('all', data)
+      (data).push(level)
+      this.emit('all', message, data)
     }
   }
 
-  public fatal (...data: any[]): void {
-    this.writeDebug('fatal', data)
+  public fatal (message: any, ...data: any[]): void {
+    this.writeDebug('fatal', message, data)
   }
 
-  public error (...data: any[]): void {
-    this.writeDebug('error', data)
+  public error (message: any, ...data: any[]): void {
+    this.writeDebug('error', message, data)
   }
 
-  public warn (...data: any[]): void {
-    this.writeDebug('warn', data)
+  public warn (message: any, ...data: any[]): void {
+    this.writeDebug('warn', message, data)
   }
 
-  public info (...data: any[]): void {
-    this.writeDebug('info', data)
+  public info (message: any, ...data: any[]): void {
+    this.writeDebug('info', message, data)
   }
 
-  public debug (...data: any[]): void {
-    this.writeDebug('debug', data)
+  public debug (message: any, ...data: any[]): void {
+    this.writeDebug('debug', message, data)
   }
 
-  public silly (...data: any[]): void {
-    this.writeDebug('silly', data)
+  public silly (message: any, ...data: any[]): void {
+    this.writeDebug('silly', message, data)
   }
 }
