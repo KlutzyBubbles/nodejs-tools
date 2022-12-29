@@ -139,9 +139,6 @@ export function getCurrentLogger (name: string): logger.Logger {
   if (name === '') {
     throw new Error('Current logger name is empty')
   }
-  console.log('data')
-  console.log(cluster.isMaster)
-  console.log(cluster.isPrimary)
   const logger = getLogger(getForkName(cluster.isMaster ?? cluster.isPrimary ?? true, process.env.name, process.env.FORK_ID), name)
   return logger
 }
